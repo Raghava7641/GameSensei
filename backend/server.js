@@ -5,6 +5,8 @@ require('dotenv').config()
 const cors = require('cors')
 const router = require('./api/routes')
 
+const loginRouter = require('./api/login')
+
 const app = express()
 
 app.use(express.json())
@@ -30,6 +32,8 @@ corsOptions = {
 app.use(cors(corsOptions))
 
 app.use('/', router)
+
+app.use('/login', loginRouter)
 
 app.listen(7077, () => {
   console.log(`Express server running on port ${7077}`)
