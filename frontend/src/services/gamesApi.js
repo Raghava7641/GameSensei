@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const sampleApiCall = async () => {
   try {
-    const { data } = await axios.get('http://localhost:7077/')
+    const { data } = await axios.get('http://localhost:7077/home')
     console.log('sample call succcessful', data)
 
     return data
