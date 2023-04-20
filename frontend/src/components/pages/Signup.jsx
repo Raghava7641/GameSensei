@@ -26,7 +26,23 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+// const theme = createTheme();
+let theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1e293b',
+    },
+    secondary: {
+      main: '#1f2937',
+    },
+  },
+});
+// const darkTheme = createTheme({
+//   palette: {
+//     mode: 'dark',
+
+//   },
+// });
 
 export default function SignUp() {
   const handleSubmit = (event) => {
@@ -50,7 +66,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

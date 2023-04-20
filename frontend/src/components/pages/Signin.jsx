@@ -30,22 +30,28 @@ function Copyright(props) {
   );
 }
 
-// const themeDark = createTheme({
-//     palette: {
-//       background: {
-//         default: "#222222"
-//       },
-//       text: {
-//         primary: "#ffffff"
-//       }
-//     }
-//   });
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
 
-const theme = createTheme();
+  },
+});
+
+let theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1e293b',
+    },
+    secondary: {
+      main: '#1f2937',
+    },
+  },
+});
+// const theme = createTheme();
 // const theme = createTheme({
 //     palette: {
 //       primary: {
-//         main: '#d3dce6',
+//         main: '#334155',
 //       },
 //     },
 //   });
