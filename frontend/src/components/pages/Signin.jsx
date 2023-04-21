@@ -16,6 +16,7 @@ import gta from '../images/gta.jpg'
 import { useState,useContext } from 'react';
 import { redirect,Navigate } from 'react-router-dom';
 import GameContext from '../context/GameContext';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -58,24 +59,46 @@ let theme = createTheme({
 
 export default function SignIn() {
 
-    const {setLogin,setLanding,setSearch}=useContext(GameContext)
-    const [isauthenticated,setIsauthenticated]=useState(false)
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setIsauthenticated(true)
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
-  };
+  //   const {setLogin,setLanding,setSearch}=useContext(GameContext)
+  //   const [isauthenticated,setIsauthenticated]=useState(false)
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   setIsauthenticated(true)
+  //   // const data = new FormData(event.currentTarget);
+  //   // console.log({
+  //   //   email: data.get('email'),
+  //   //   password: data.get('password'),
+  //   // });
+  // };
 
-  if(isauthenticated){
-    setLogin(false)
-    setLanding(true)
-    setSearch(false)
-    return <Navigate to='/dashbord/'/>
+  // if(isauthenticated){
+  //   setLogin(false)
+  //   setLanding(true)
+  //   setSearch(false)
+  //   return <Navigate to='/dashbord/'/>
+  // }
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: ""
+  });
+  const handleChange =(e) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [e.target.name] : e.target.value
+    }))
   }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const reqBody = {
+          email: inputs.email,
+          password: inputs.password
+    }
+    axios.post(
+      'http://www.localhost:7077/login/validate',reqBody
+    )
+    console.log(inputs);
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -120,6 +143,8 @@ export default function SignIn() {
                 id="email"
                 label="Email Address"
                 name="email"
+                onChange={handleChange}
+                value={inputs.email}
                 autoComplete="email"
                 autoFocus
               />
@@ -127,6 +152,8 @@ export default function SignIn() {
                 margin="normal"
                 required
                 fullWidth
+                onChange={handleChange}
+                value={inputs.password}
                 name="password"
                 label="Password"
                 type="password"

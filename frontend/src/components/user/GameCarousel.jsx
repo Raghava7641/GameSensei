@@ -16,22 +16,22 @@ const images = [
   {
     label: 'San Francisco – Oakland Bay Bridge, United States',
     imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://www.gamespot.com/a/uploads/original/469/4693985/2330894-2322534-2227554-grand+theft+auto+v.jpg',
   },
   {
     label: 'Bird',
     imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://www.gamespot.com/a/uploads/original/469/4693985/2330894-2322534-2227554-grand+theft+auto+v.jpg',
   },
   {
     label: 'Bali, Indonesia',
     imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250',
+      'https://www.gamespot.com/a/uploads/original/469/4693985/2330894-2322534-2227554-grand+theft+auto+v.jpg',
   },
   {
     label: 'Goč, Serbia',
     imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://www.gamespot.com/a/uploads/original/469/4693985/2330894-2322534-2227554-grand+theft+auto+v.jpg',
   },
 ];
 
@@ -53,7 +53,7 @@ function GameCarousel() {
   };
 
   return (
-    <Box sx={{ width: "50vh", height : "80vh",flexGrow: 1 }}>
+    <Box sx={{ width: "140vh", height : "80vh",flexGrow: 1 }}>
       <Paper
         square
         elevation={0}
@@ -79,10 +79,12 @@ function GameCarousel() {
               <Box
                 component="img"
                 sx={{
-                  height: "50vh",
-                  display: 'block',
-                  width: "80vh",
-                  overflow: 'hidden'
+                  height: "70vh",
+                  // display: 'block',
+                  width: "140vh",
+                  display:"flex",
+                  alignItems:"center",
+                  justifyContent:"center"
                 }}
                 src={step.imgPath}
                 alt={step.label}
