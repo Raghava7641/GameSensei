@@ -3,12 +3,6 @@ const LoginModel = require('../models/loginModel')
 
 const loginRouter = express.Router()
 
-loginRouter.get('/', async (req, res) => {
-  const response = await LoginModel.find({})
-
-  return res.send(response)
-})
-
 loginRouter.post('/addUser', async (req, res) => {
   try {
     const { email, password, firstName, lastName } = req?.body

@@ -48,35 +48,65 @@ router.get('/home', async (req, res) => {
   res.status(200).send(updatedResponse)
 })
 
-// router.get('/test', (req, res) => {
-//   res.send('Hello World')
-// })
+router.get('/game/:id', async (req, res) => {
+  try {
+    if (!req?.params?.id) {
+      return res.status(400).send({ message: 'Bad request! Game id required!' })
+    }
+    const game = await GameModel.findById(req.params.id)
+
+    if (!game) {
+      return res.status(404).send({ message: 'Game not found' })
+    }
+
+    const {
+      Name,
+      Platform,
+      Year_of_Release,
+      Genre,
+      Publisher,
+      NA_Sales,
+      EU_Sales,
+      JP_Sales,
+      Other_Sales,
+      Global_Sales,
+      Critic_Score,
+      Critic_Count,
+      User_Score,
+      User_Count,
+    } = game
+
+    imageLink = await getImageLink(Name)
+
+    finalGameResponse = {
+      Name,
+      Platform,
+      Year_of_Release,
+      Genre,
+      Publisher,
+      NA_Sales,
+      EU_Sales,
+      JP_Sales,
+      Other_Sales,
+      Global_Sales,
+      Critic_Score,
+      Critic_Count,
+      User_Score,
+      User_Count,
+      imageLink,
+    }
+
+    return res.status(200).send(finalGameResponse)
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal server error', error })
+  }
+})
 
 const appendGameThumbnail = async (dbResponse) => {
   const updatedResponse = await Promise.all(
     dbResponse.map(
       async ({ _id, Name, Platform, Year_of_Release, Genre, Critic_Score }) => {
-        imageLink = 'No Image Available!'
-
-        if (Name.trim()) {
-          const { data } = await axios.get(
-            'http://www.gamespot.com/api/games',
-            {
-              params: {
-                api_key: '502f699ca28dbbc8f9a6a081596739b63ec93507',
-                format: 'json',
-                field_list: 'name,image',
-                filter: `name:${Name}`,
-              },
-            },
-          )
-
-          if (data?.results.length > 0) {
-            if (data.results[0]?.image?.square_tiny) {
-              imageLink = data.results[0].image.square_tiny
-            }
-          }
-        }
+        imageLink = await getImageLink(Name, false)
 
         return {
           _id,
@@ -97,24 +127,7 @@ const appendGameThumbnail = async (dbResponse) => {
 const appendImages = async (dbResponse) => {
   const updatedResponse = await Promise.all(
     dbResponse.map(async ({ _id, Name }) => {
-      imageLink = 'No Image Available!'
-
-      if (Name.trim()) {
-        const { data } = await axios.get('http://www.gamespot.com/api/games', {
-          params: {
-            api_key: '502f699ca28dbbc8f9a6a081596739b63ec93507',
-            format: 'json',
-            field_list: 'name,image',
-            filter: `name:${Name}`,
-          },
-        })
-
-        if (data?.results.length > 0) {
-          if (data.results[0]?.image?.original) {
-            imageLink = data.results[0].image.original
-          }
-        }
-      }
+      imageLink = await getImageLink(Name)
 
       return {
         _id,
@@ -124,6 +137,29 @@ const appendImages = async (dbResponse) => {
   )
 
   return updatedResponse
+}
+
+const getImageLink = async (Name, isOriginal = true) => {
+  imageLink = 'No Image Available!'
+
+  if (Name.trim()) {
+    const { data } = await axios.get('http://www.gamespot.com/api/games', {
+      params: {
+        api_key: '502f699ca28dbbc8f9a6a081596739b63ec93507',
+        format: 'json',
+        field_list: 'name,image',
+        filter: `name:${Name}`,
+      },
+    })
+
+    if (data?.results.length > 0) {
+      if (data.results[0]?.image?.square_tiny) {
+        imageLink = data.results[0].image.square_tiny
+      }
+    }
+  }
+
+  return imageLink
 }
 
 module.exports = router
