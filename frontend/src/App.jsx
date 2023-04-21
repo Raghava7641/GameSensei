@@ -8,12 +8,9 @@ import About from "./components/pages/About";
 import NotFound from "./components/pages/NotFound";
 import {GameProvider} from './components/context/GameContext'
 import SignIn from "./components/pages/Signin";
-<<<<<<< Updated upstream
 import SignUp from "./components/pages/Signup";
-=======
-import SignUp from "./components/pages/signup";
+// import SignUp from "./components/pages/signup";
 import Logout from "./components/pages/Logout";
->>>>>>> Stashed changes
 
 function App() {
   return (

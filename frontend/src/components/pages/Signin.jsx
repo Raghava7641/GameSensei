@@ -57,10 +57,12 @@ let theme = createTheme({
 //     },
 //   });
 
+
 export default function SignIn() {
 
-  //   const {setLogin,setLanding,setSearch}=useContext(GameContext)
-  //   const [isauthenticated,setIsauthenticated]=useState(false)
+
+    const {setLogin,setLanding,setSearch}=useContext(GameContext)
+    const [isauthenticated,setIsauthenticated]=useState(false)
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   setIsauthenticated(true)
@@ -71,7 +73,6 @@ export default function SignIn() {
   //   // });
   // };
 
-<<<<<<< Updated upstream
   // if(isauthenticated){
   //   setLogin(false)
   //   setLanding(true)
@@ -87,13 +88,6 @@ export default function SignIn() {
       ...prevState,
       [e.target.name] : e.target.value
     }))
-=======
-  if(isauthenticated){
-    setLogin(false)
-    setLanding(true)
-    setSearch(false)
-    return <Navigate to='/'/>
->>>>>>> Stashed changes
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -104,6 +98,14 @@ export default function SignIn() {
     axios.post(
       'http://www.localhost:7077/login/validate',reqBody
     )
+    setIsauthenticated(true)
+    if(isauthenticated){
+        setLogin(false)
+        setLanding(true)
+        setSearch(false)
+        return <Navigate to='/'/>
+      }
+
     console.log(inputs);
   }
 

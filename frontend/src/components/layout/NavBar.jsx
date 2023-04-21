@@ -48,7 +48,7 @@ function NavBar({title}) {
                     {/* <Link to={'/profile'} className="btn btn-ghost btn-sm rounded-btn font-bold text-3xl">
                         <CgProfile/>
                     </Link> */}
-                    <Link to={'/logout'} onClick={handleLogout} className="btn btn-ghost btn-sm rounded-btn font-bold " element={<Logout/>}>
+                    <Link to={'/'} onClick={handleLogout} className="btn btn-ghost btn-sm rounded-btn font-bold ">
                         Logout
                     </Link>
                     </>}
