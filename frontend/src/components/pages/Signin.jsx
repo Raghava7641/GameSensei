@@ -71,6 +71,7 @@ export default function SignIn() {
   //   // });
   // };
 
+<<<<<<< Updated upstream
   // if(isauthenticated){
   //   setLogin(false)
   //   setLanding(true)
@@ -86,6 +87,13 @@ export default function SignIn() {
       ...prevState,
       [e.target.name] : e.target.value
     }))
+=======
+  if(isauthenticated){
+    setLogin(false)
+    setLanding(true)
+    setSearch(false)
+    return <Navigate to='/'/>
+>>>>>>> Stashed changes
   }
   const handleSubmit = (e) => {
     e.preventDefault();

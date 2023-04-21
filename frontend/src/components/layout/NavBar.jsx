@@ -8,10 +8,18 @@ import {Link} from 'react-router-dom';
 import  PropTypes  from "prop-types";
 import { useState } from 'react';
 import GameContext from '../context/GameContext';
+import Logout from '../pages/Logout';
 
 
 function NavBar({title}) {
-    const{login,landing,setSearch,search}=useContext(GameContext)
+    const{login,landing,setSearch,search,setLogin,setLanding}=useContext(GameContext)
+
+    const handleLogout=()=>{
+        setLanding(false)
+        setLogin(true)
+    }
+
+    
 
     const handleClick=(e)=>{
         console.log('clicked',e.target)
@@ -32,14 +40,15 @@ function NavBar({title}) {
                 <Link onClick={handleClick} to={'/search'} className="btn btn-ghost  btn-sm rounded-btn font-bold text-2xl">
                         <FaSearch/>
                     </Link>
-                    <Link to={'/'} className="btn btn-ghost btn-sm rounded-btn font-bold ">
+                    
+                    {landing &&<>
+                    <Link to={'/home'} className="btn btn-ghost btn-sm rounded-btn font-bold ">
                         Home
                     </Link>
-                    {landing &&<>
-                    <Link to={'/profile'} className="btn btn-ghost btn-sm rounded-btn font-bold text-3xl">
+                    {/* <Link to={'/profile'} className="btn btn-ghost btn-sm rounded-btn font-bold text-3xl">
                         <CgProfile/>
-                    </Link>
-                    <Link to={'/'} className="btn btn-ghost btn-sm rounded-btn font-bold ">
+                    </Link> */}
+                    <Link to={'/logout'} onClick={handleLogout} className="btn btn-ghost btn-sm rounded-btn font-bold " element={<Logout/>}>
                         Logout
                     </Link>
                     </>}

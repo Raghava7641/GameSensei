@@ -9,7 +9,7 @@ export const GameProvider=({children})=>{
     const [login,setLogin]=useState(true);
     const [landing,setLanding]=useState(false);
     const [search,setSearch]=useState(false)
-    const sampleData=[
+    const [sampleData,setSampleData]=useState([
         {
             id:1,
             name:'Game1',
@@ -38,12 +38,13 @@ export const GameProvider=({children})=>{
             year:2002,
             image:game2
         }
-    ];
+    ]);
 
 
 
     return <GameContext.Provider value={{
         sampleData,
+        setSampleData,
         setLogin,
         setLanding,
         search,
