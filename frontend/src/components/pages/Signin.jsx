@@ -17,6 +17,7 @@ import { useState,useContext } from 'react';
 import { redirect,Navigate } from 'react-router-dom';
 import GameContext from '../context/GameContext';
 import axios from 'axios';
+// import { useHistory } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -31,12 +32,7 @@ function Copyright(props) {
   );
 }
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-
-  },
-});
+// const history = useHistory();
 
 let theme = createTheme({
   palette: {
@@ -89,25 +85,31 @@ export default function SignIn() {
       [e.target.name] : e.target.value
     }))
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const reqBody = {
           email: inputs.email,
           password: inputs.password
     }
-    axios.post(
+   const details = await axios.post(
       'http://www.localhost:7077/login/validate',reqBody
     )
-    setIsauthenticated(true)
-    if(isauthenticated){
-        setLogin(false)
-        setLanding(true)
-        setSearch(false)
-        return <Navigate to='/'/>
+    console.log('details', details)
+
+    if (details?.status === 200) {
+      setIsauthenticated(true)
       }
 
-    console.log(inputs);
+      // history.push('/');
+    }   
+    if(isauthenticated){
+      setLogin(false)
+      setLanding(true)
+      setSearch(false)
+    return <Navigate to='/'/> 
   }
+  
+  
 
 
   return (

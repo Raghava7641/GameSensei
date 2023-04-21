@@ -4,6 +4,7 @@ import GameContext from '../context/GameContext'
 import GameCarousel from './GameCarousel';
 import GameRating from './GameRating';
 import GameCarousel2 from './GameCarousel2';
+import { Navigate } from 'react-router-dom';
 // import game1 from '../images/game1.webp';
 
 function GameResults() {
@@ -20,15 +21,19 @@ function GameResults() {
     const data= await response.json()
     setSampleData(data)
   }
-  console.log('hello')
-  console.log(sampleData)
+  // console.log('hello')
+  // console.log(sampleData)
+  const handleClick=()=>{
+    return <Navigate to='/' />
+    console.log('clicked')
+  }
 
   return (<>
     {login&& <GameCarousel2/>}
     {landing&&
     <div className='grid grid-cols-1 gap-20 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2'>
       {sampleData.map((i)=>(
-        <div className="transform  transition duration-500 hover:scale-125 hover: flex justify-center items-center">
+        <div onClick={handleClick} className="transform  transition duration-500 hover:scale-125 hover: flex justify-center items-center">
         <div className="card-body bg-neutral rounded p-4 justify-center " key={i._id}>
           <div className="card-title font-bold justify-center">
             {i.Name}

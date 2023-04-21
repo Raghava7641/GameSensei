@@ -21,13 +21,13 @@ function App() {
 
         <main className="container mx-auto px-3 pb-12 flex-grow">
           <Routes>
-            <Route index path="/" element={<Home/>}/>
+            <Route path="/" element={<Home/>}/>
             <Route path="/about" element={<About/>}/>
             <Route path="/notfound" element={<NotFound/>}/>
             <Route path="/*" element={<Home/>}/>
             <Route path="/signin/*" element={<SignIn>
               <Routes>
-                <Route to={'/home'} element={<Home/>}></Route>
+                <Route to={'/'} element={<Home/>}></Route>
                 </Routes>
                 </SignIn>}/>
             <Route path="/signup" element={<SignUp/>}/>
