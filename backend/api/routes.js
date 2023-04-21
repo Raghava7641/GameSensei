@@ -153,8 +153,10 @@ const getImageLink = async (Name, isOriginal = true) => {
     })
 
     if (data?.results.length > 0) {
-      if (data.results[0]?.image?.square_tiny) {
+      if (!isOriginal && data.results[0]?.image?.square_tiny) {
         imageLink = data.results[0].image.square_tiny
+      } else if (data.results[0]?.image?.original) {
+        imageLink = data.results[0].image.original
       }
     }
   }
