@@ -45,12 +45,6 @@ export default function SignIn() {
   const [open, setOpen] = useState(false)
   const [messageResponse, setMessageResponse] = useState('')
 
-  // if(isauthenticated){
-  //   setLogin(false)
-  //   setLanding(true)
-  //   setSearch(false)
-  //   return <Navigate to='/dashbord/'/>
-  // }
   const [inputs, setInputs] = useState({
     email: '',
     password: '',

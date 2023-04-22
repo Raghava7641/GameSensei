@@ -102,6 +102,22 @@ router.get('/game/:id', async (req, res) => {
   }
 })
 
+router.get('/search', async (req, res) => {
+  try {
+    const games = await GameModel.find({}, { _id: 1, Name: 1 })
+
+    // console.log('req.params.Name here', game)
+
+    if (games.length === 0) {
+      return res.status(404).send({ message: 'API Error!' })
+    }
+
+    return res.status(200).send(games)
+  } catch (error) {
+    return res.status(500).send({ message: 'Internal server error', error })
+  }
+})
+
 const appendGameThumbnail = async (dbResponse) => {
   const updatedResponse = await Promise.all(
     dbResponse.map(

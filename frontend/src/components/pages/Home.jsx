@@ -6,12 +6,12 @@ import GameContext from '../context/GameContext'
 import UserSearch from '../user/UserSearch'
 
 function Home() {
-  const {search,setSearch}=useContext(GameContext);
+  const { search, login } = useContext(GameContext)
 
-  return (<>
-      {search && <UserSearch/>}
-      <GameResults/>
-      
+  return (
+    <>
+      {search && !login && <UserSearch />}
+      <GameResults />
     </>
   )
 }

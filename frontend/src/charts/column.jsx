@@ -1,49 +1,37 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import {
-  Chart,
-  PieSeries,
-  Title,
-} from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
+import React from 'react'
+import { Chart } from 'react-google-charts'
 
-const data = [
-  { country: 'Russia', area: 12 },
-  { country: 'Canada', area: 7 },
-  { country: 'USA', area: 7 },
-  { country: 'China', area: 7 },
-  { country: 'Brazil', area: 6 },
-  { country: 'Australia', area: 5 },
-  { country: 'India', area: 2 },
-  { country: 'Others', area: 55 },
-];
-export default class Demo extends React.PureComponent {
-  constructor(props) {
-    super(props);
+// export const data = [
+//   ['Task', 'Hours per Day'],
+//   ['Work', 11],
+//   ['Eat', 2],
+//   ['Commute', 2],
+//   ['Watch TV', 2],
+//   ['Sleep', 7],
+// ]
 
-    this.state = {
-      data,
-    };
-  }
+export const options = {
+  title: 'Video Game Sales by Region',
+}
 
-  render() {
-    const { data: chartData } = this.state;
+export default function DetailChart(props) {
+  const { chartData } = props
+  console.log(chartData)
+  const data = [
+    ['Region', 'Sales'],
+    ['North America', chartData.NA_Sales],
+    ['Europe', chartData.EU_Sales],
+    ['Japan', chartData.JP_Sales],
+    ['Other', chartData.Other_Sales],
+  ]
 
-    return (
-      <Paper>
-        <Chart
-          data={chartData}
-        >
-          <PieSeries
-            valueField="area"
-            argumentField="country"
-          />
-          <Title
-            text="Area of Countries"
-          />
-          <Animation />
-        </Chart>
-      </Paper>
-    );
-  }
+  return (
+    <Chart
+      chartType="PieChart"
+      data={data}
+      options={options}
+      width={'100%'}
+      height={'400px'}
+    />
+  )
 }

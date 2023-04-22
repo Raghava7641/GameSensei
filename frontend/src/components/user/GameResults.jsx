@@ -4,8 +4,8 @@ import GameContext from '../context/GameContext'
 import GameCarousel from './GameCarousel'
 import GameRating from './GameRating'
 import GameCarousel2 from './GameCarousel2'
-import { Navigate } from 'react-router-dom'
-// import game1 from '../images/game1.webp';
+import { useNavigate } from 'react-router-dom'
+import { Typography, Rating } from '@mui/material'
 
 function GameResults() {
   const { sampleData, setSampleData, login, landing } = useContext(GameContext)
@@ -19,23 +19,26 @@ function GameResults() {
     const data = await response.json()
     setSampleData(data)
   }
-  // console.log('hello')
-  // console.log(sampleData)
-  const handleClick = () => {
-    return <Navigate to="/" />
-    console.log('clicked')
+
+  const navigate = useNavigate()
+  const handleClick = (id) => {
+    console.log('clicked', id)
+    navigate(`/game/${id}`)
   }
 
   return (
     <>
+      <Typography variant="h2" className="text-center" sx={{ my: 2 }}>
+        Top Rated Games
+      </Typography>
       {login && <GameCarousel2 />}
       {landing && (
         <div className="grid grid-cols-1 gap-20 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
           {sampleData.map((i) => (
             <div
-              onClick={handleClick}
               className="transform  transition duration-500 hover:scale-125 hover: flex justify-center items-center"
               key={i._id}
+              onClick={() => handleClick(i._id)}
             >
               <div className="card-body bg-neutral rounded p-4 justify-center">
                 <div className="card-title font-bold justify-center">
