@@ -8,7 +8,9 @@ import About from "./components/pages/About";
 import NotFound from "./components/pages/NotFound";
 import {GameProvider} from './components/context/GameContext'
 import SignIn from "./components/pages/Signin";
-import SignUp from "./components/pages/signup";
+import SignUp from "./components/pages/Signup";
+// import SignUp from "./components/pages/signup";
+import Logout from "./components/pages/Logout";
 
 function App() {
   return (
@@ -22,13 +24,14 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path="/about" element={<About/>}/>
             <Route path="/notfound" element={<NotFound/>}/>
-            <Route path="*" element={<Home/>}/>
+            <Route path="/*" element={<Home/>}/>
             <Route path="/signin/*" element={<SignIn>
               <Routes>
-                <Route to={'/dashbord'} element={<Home/>}></Route>
+                <Route to={'/'} element={<Home/>}></Route>
                 </Routes>
                 </SignIn>}/>
             <Route path="/signup" element={<SignUp/>}/>
+            <Route path="/logout" element={<Logout/>}/>
 
           </Routes>
         </main>
