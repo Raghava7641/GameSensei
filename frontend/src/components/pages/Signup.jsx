@@ -1,33 +1,24 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from 'axios';
+import * as React from 'react'
+import { useState, useContext } from 'react'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import axios from 'axios'
+import GameContext from '../context/GameContext'
+import { Navigate } from 'react-router-dom'
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// const theme = createTheme();
 let theme = createTheme({
   palette: {
     primary: {
@@ -37,7 +28,7 @@ let theme = createTheme({
       main: '#1f2937',
     },
   },
-});
+})
 // const darkTheme = createTheme({
 //   palette: {
 //     mode: 'dark',
@@ -46,22 +37,56 @@ let theme = createTheme({
 // });
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const { setLogin, setLanding, setSearch } = useContext(GameContext)
+  const [isauthenticated, setIsauthenticated] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [messageResponse, setMessageResponse] = useState('')
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
 
     const reqBody = {
       email: data.get('email'),
       password: data.get('password'),
       firstName: data.get('firstName'),
-      lastName: data.get('lastName')
+      lastName: data.get('lastName'),
     }
-    axios.post('http://www.localhost:7077/login/addUser', reqBody)
-  };
+
+    try {
+      const { status } = await axios.post(
+        'http://www.localhost:7077/login/addUser',
+        reqBody,
+      )
+      if (status === 200) {
+        setIsauthenticated(true)
+      }
+    } catch ({ code, response }) {
+      setOpen(true)
+      setMessageResponse(`${code}: ${response?.data?.message}`)
+    }
+  }
+
+  if (isauthenticated) {
+    setLogin(false)
+    setLanding(true)
+    setSearch(false)
+    return <Navigate to="/" />
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+        >
+          <Alert severity="error" sx={{ width: '100%' }}>
+            {messageResponse}
+          </Alert>
+        </Snackbar>
         <CssBaseline />
         <Box
           sx={{
@@ -77,7 +102,12 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -123,7 +153,9 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
@@ -138,15 +170,14 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
-  );
+  )
 }

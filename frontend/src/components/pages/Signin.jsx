@@ -1,38 +1,24 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from 'react'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import Link from '@mui/material/Link'
+import Paper from '@mui/material/Paper'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import gta from '../images/gta.jpg'
-import { useState,useContext } from 'react';
-import { redirect,Navigate } from 'react-router-dom';
-import GameContext from '../context/GameContext';
-import axios from 'axios';
-// import { useHistory } from 'react-router-dom';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// const history = useHistory();
+import { useState, useContext } from 'react'
+import { Navigate } from 'react-router-dom'
+import GameContext from '../context/GameContext'
+import axios from 'axios'
 
 let theme = createTheme({
   palette: {
@@ -43,7 +29,7 @@ let theme = createTheme({
       main: '#1f2937',
     },
   },
-});
+})
 // const theme = createTheme();
 // const theme = createTheme({
 //     palette: {
@@ -53,21 +39,11 @@ let theme = createTheme({
 //     },
 //   });
 
-
 export default function SignIn() {
-
-
-    const {setLogin,setLanding,setSearch}=useContext(GameContext)
-    const [isauthenticated,setIsauthenticated]=useState(false)
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setIsauthenticated(true)
-  //   // const data = new FormData(event.currentTarget);
-  //   // console.log({
-  //   //   email: data.get('email'),
-  //   //   password: data.get('password'),
-  //   // });
-  // };
+  const { setLogin, setLanding, setSearch } = useContext(GameContext)
+  const [isauthenticated, setIsauthenticated] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [messageResponse, setMessageResponse] = useState('')
 
   // if(isauthenticated){
   //   setLogin(false)
@@ -76,46 +52,60 @@ export default function SignIn() {
   //   return <Navigate to='/dashbord/'/>
   // }
   const [inputs, setInputs] = useState({
-    email: "",
-    password: ""
-  });
-  const handleChange =(e) => {
+    email: '',
+    password: '',
+  })
+  const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
-      [e.target.name] : e.target.value
+      [e.target.name]: e.target.value,
     }))
   }
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const reqBody = {
-          email: inputs.email,
-          password: inputs.password
+      email: inputs.email,
+      password: inputs.password,
     }
-   const details = await axios.post(
-      'http://www.localhost:7077/login/validate',reqBody
-    )
-    console.log('details', details)
 
-    if (details?.status === 200) {
-      setIsauthenticated(true)
+    try {
+      const { status } = await axios.post(
+        'http://www.localhost:7077/login/validate',
+        reqBody,
+      )
+      if (status === 200) {
+        setIsauthenticated(true)
       }
-
-      // history.push('/');
-    }   
-    if(isauthenticated){
-      setLogin(false)
-      setLanding(true)
-      setSearch(false)
-    return <Navigate to='/'/> 
+    } catch ({ code, response }) {
+      setOpen(true)
+      setMessageResponse(`${code}: ${response?.data?.message}`)
+    }
   }
-  
-  
-
+  if (isauthenticated) {
+    setLogin(false)
+    setLanding(true)
+    setSearch(false)
+    return <Navigate to="/" />
+  }
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ width: "150vh", height: "70vh", overflow: "hidden"}}>
-      {/* <Grid container component="main" sx={{ height: "90vh"}}> */}
+      <Grid
+        container
+        component="main"
+        sx={{ width: '150vh', height: '70vh', overflow: 'hidden' }}
+      >
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={() => setOpen(false)}
+        >
+          <Alert severity="error" sx={{ width: '100%' }}>
+            {messageResponse}
+          </Alert>
+        </Snackbar>
+        {/* <Grid container component="main" sx={{ height: "90vh"}}> */}
         <CssBaseline />
         <Grid
           item
@@ -126,7 +116,9 @@ export default function SignIn() {
             backgroundImage: `url(${gta})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -147,7 +139,12 @@ export default function SignIn() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required
@@ -186,22 +183,16 @@ export default function SignIn() {
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
       </Grid>
     </ThemeProvider>
-  );
+  )
 }

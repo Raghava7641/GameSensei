@@ -6,7 +6,6 @@
 // import nfs from '../images/nfs.webp'
 // import rocket_league from '../images/rocket_league.jpeg'
 
-
 // function GameCarousel2() {
 //   return (
 //     <>
@@ -40,10 +39,9 @@
 //             aria-label="Slide 3"></button>
 //         </div>
 
-
 //         <div
 //             class="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
-            
+
 //             <div
 //             class="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
 //             data-te-carousel-item
@@ -53,7 +51,7 @@
 //                 class="block w-full"
 //                 alt="Wild Landscape" />
 //             </div>
-            
+
 //             <div
 //             class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
 //             data-te-carousel-item>
@@ -62,7 +60,7 @@
 //                 class="block w-full"
 //                 alt="Camera" />
 //             </div>
-            
+
 //             <div
 //             class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
 //             data-te-carousel-item>
@@ -73,7 +71,6 @@
 //             </div>
 //         </div>
 
-        
 //         <button
 //             class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
 //             type="button"
@@ -98,7 +95,7 @@
 //             >Previous</span
 //             >
 //         </button>
-        
+
 //         <button
 //             class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
 //             type="button"
@@ -130,20 +127,28 @@
 
 // export default GameCarousel2;
 
-import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import React from 'react'
+import { Carousel } from 'react-responsive-carousel'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
-import batman from '../images/batman.jpg';
-import dbd from '../images/dbd.jpg';
-import poster from '../images/games1.avif';
-import gta5 from '../images/gta5.jpg';
-import nfs from '../images/nfs.webp';
-import rocket_league from '../images/rocket_league.jpeg';
+import batman from '../images/batman.jpg'
+import dbd from '../images/dbd.jpg'
+import poster from '../images/games1.avif'
+import gta5 from '../images/gta5.jpg'
+import nfs from '../images/nfs.webp'
+import rocket_league from '../images/rocket_league.jpeg'
 
 function GameCarousel2() {
   return (
-    <Carousel showIndicators={true} autoPlay={true} interval={2000} infiniteLoop={true} showThumbs={true}>
+    <Carousel
+      showIndicators={true}
+      autoPlay={true}
+      interval={2000}
+      infiniteLoop={true}
+      showThumbs={true}
+      dynamicHeight={true}
+      emulateTouch={true}
+    >
       <div>
         <img src={gta5} alt="Grand Theft Auto V" />
       </div>
@@ -163,7 +168,7 @@ function GameCarousel2() {
         <img src={rocket_league} alt="Rocket League" />
       </div>
     </Carousel>
-  );
+  )
 }
 
-export default GameCarousel2;
+export default GameCarousel2
