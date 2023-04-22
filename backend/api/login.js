@@ -12,11 +12,10 @@ loginRouter.post('/addUser', async (req, res) => {
       const passRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}$/
 
       if (!emailRegex.test(email) || !passRegex.test(password)) {
-        return res
-          .status(422)
-          .send(
+        return res.status(422).send({
+          message:
             'Unprocessable Entity: Email or password does not meet requirements!',
-          )
+        })
       }
 
       const newUser = new LoginModel({
@@ -51,7 +50,7 @@ loginRouter.post('/validate', async (req, res) => {
         return res.status(200).send({ message: 'Login Successful!', loginUser })
       }
     } else {
-      return res.status(400).send({ message: 'Invalid email or password!' })
+      return res.status(400).send({ message: 'Email or Password missing!' })
     }
   } catch (error) {
     res
