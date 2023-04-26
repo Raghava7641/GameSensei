@@ -38,11 +38,3 @@ app.use('/login', loginRouter)
 app.listen(7077, () => {
   console.log(`Express server running on port ${7077}`)
 })
-
-// Checking out mongoose with a test input
-// const testSchema = new mongoose.Schema(
-//   {
-//     test: String,
-//   },
-//   { collection: 'demo' },
-// )

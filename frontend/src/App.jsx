@@ -1,15 +1,11 @@
-// import './App.css';
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/layout/NavBar'
 import Footer from './components/layout/Footer'
 import Home from './components/pages/Home'
-import About from './components/pages/About'
-import NotFound from './components/pages/NotFound'
 import { GameProvider } from './components/context/GameContext'
 import SignIn from './components/pages/Signin'
 import SignUp from './components/pages/Signup'
-// import SignUp from "./components/pages/signup";
 import Logout from './components/pages/Logout'
 import Details from './components/pages/Details'
 
@@ -23,11 +19,9 @@ function App() {
           <main className="container mx-auto px-3 pb-12 flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/notfound" element={<NotFound />} />
-              <Route path="/*" element={<Home />} />
+              <Route path="*" element={<Home />} />
               <Route
-                path="/signin/*"
+                path="/signin"
                 element={
                   <SignIn>
                     <Routes>

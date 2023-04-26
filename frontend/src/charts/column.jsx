@@ -1,22 +1,15 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
 
-// export const data = [
-//   ['Task', 'Hours per Day'],
-//   ['Work', 11],
-//   ['Eat', 2],
-//   ['Commute', 2],
-//   ['Watch TV', 2],
-//   ['Sleep', 7],
-// ]
-
 export const options = {
   title: 'Video Game Sales by Region',
+  fontSize: 20,
+  legend: { position: 'right' },
+  backgroundColor: '#cee0f2',
 }
 
 export default function DetailChart(props) {
   const { chartData } = props
-  console.log(chartData)
   const data = [
     ['Region', 'Sales'],
     ['North America', chartData.NA_Sales],
@@ -31,7 +24,7 @@ export default function DetailChart(props) {
       data={data}
       options={options}
       width={'100%'}
-      height={'400px'}
+      height={'450px'}
     />
   )
 }

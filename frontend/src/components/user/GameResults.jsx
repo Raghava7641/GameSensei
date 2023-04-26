@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useContext } from 'react'
 import GameContext from '../context/GameContext'
-import GameCarousel from './GameCarousel'
 import GameRating from './GameRating'
 import GameCarousel2 from './GameCarousel2'
 import { useNavigate } from 'react-router-dom'

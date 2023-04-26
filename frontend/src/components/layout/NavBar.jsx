@@ -1,14 +1,9 @@
-// import { BrowserRouter as Router,Route,Routes } from "react-router-dom";
 import React, { useContext } from 'react'
-// import {FaGithub} from 'react-icons/fa'
 import { GiConsoleController } from 'react-icons/gi'
-import { CgProfile } from 'react-icons/cg'
 import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { useState } from 'react'
 import GameContext from '../context/GameContext'
-import Logout from '../pages/Logout'
 
 function NavBar({ title }) {
   const {
@@ -26,7 +21,6 @@ function NavBar({ title }) {
   }
 
   const handleClick = (e) => {
-    console.log('clicked', e.target)
     setSearch(!search)
   }
 

@@ -29,12 +29,6 @@ let theme = createTheme({
     },
   },
 })
-// const darkTheme = createTheme({
-//   palette: {
-//     mode: 'dark',
-
-//   },
-// });
 
 export default function SignUp() {
   const { setLogin, setLanding, setSearch } = useContext(GameContext)

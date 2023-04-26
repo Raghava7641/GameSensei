@@ -30,14 +30,6 @@ let theme = createTheme({
     },
   },
 })
-// const theme = createTheme();
-// const theme = createTheme({
-//     palette: {
-//       primary: {
-//         main: '#334155',
-//       },
-//     },
-//   });
 
 export default function SignIn() {
   const { setLogin, setLanding, setSearch } = useContext(GameContext)
