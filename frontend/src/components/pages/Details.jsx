@@ -9,22 +9,22 @@ import Stack from '@mui/material/Stack'
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports'
 import ScoreSharpIcon from '@mui/icons-material/ScoreSharp'
 import '../../Dash.css'
-import axios from 'axios'
 import DetailChart from '../../charts/column'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
+import { getGameDetail } from '../../services/gamesApi'
 
 export default function Details() {
   const { id } = useParams()
   const [gameDetail, setGameDetail] = React.useState([])
 
   useEffect(() => {
-    fetchData()
+    fetchData(id)
   }, [])
 
-  const fetchData = async () => {
-    const { data } = await axios.get(`http://localhost:7077/game/${id}`)
-    console.log(data)
+  const fetchData = async (id) => {
+    const data = await getGameDetail(id)
+
     setGameDetail(data)
   }
 
@@ -40,7 +40,11 @@ export default function Details() {
             item
             xs={8}
             sx={{
-              backgroundImage: `url(${gameDetail?.imageLink})`,
+              backgroundImage: `url(${
+                gameDetail?.imageLink === 'No Image Available!'
+                  ? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
+                  : gameDetail.imageLink
+              })`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}

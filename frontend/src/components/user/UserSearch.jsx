@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { Autocomplete, TextField } from '@mui/material'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { searchGames } from '../../services/gamesApi'
 
 function UserSearch() {
   const navigate = useNavigate()
@@ -17,11 +17,8 @@ function UserSearch() {
 
   useEffect(() => {
     async function fetchGames() {
-      try {
-        const { data } = await axios.get('http://localhost:7077/search')
-        // console.log(data)
-        setGameList(data)
-      } catch (error) {}
+      const data = await searchGames()
+      setGameList(data)
     }
 
     fetchGames()

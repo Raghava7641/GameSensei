@@ -5,17 +5,18 @@ import GameRating from './GameRating'
 import GameCarousel2 from './GameCarousel2'
 import { useNavigate } from 'react-router-dom'
 import { Typography, Rating } from '@mui/material'
+import { getHomeGames } from '../../services/gamesApi'
+import noimg from '../images/noimg.png'
 
 function GameResults() {
   const { sampleData, setSampleData, login, landing } = useContext(GameContext)
+
   useEffect(() => {
-    // console.log('hi')
     fetchData()
   }, [landing])
 
   const fetchData = async () => {
-    const response = await fetch(`http://localhost:7077/home`)
-    const data = await response.json()
+    const data = await getHomeGames()
     setSampleData(data)
   }
 
@@ -47,7 +48,11 @@ function GameResults() {
                   {/* <div className="bg-no-repeat bg-center" style={{'backgroundImage':`url(${i.imageLink})`}}>
             </div> */}
                   <div className="bg-auto md-4 flex-grow ">
-                    <img src={i.imageLink} alt="game" className="bg-auto" />
+                    {i.imageLink === 'No Image Available!' ? (
+                      <img src={noimg} alt="game" className="bg-auto" />
+                    ) : (
+                      <img src={i.imageLink} alt="game" className="bg-auto" />
+                    )}
                   </div>
                   <div className="flex flex-col justify-between m-2 ">
                     <div className="platform">

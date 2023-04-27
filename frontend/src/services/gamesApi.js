@@ -1,9 +1,8 @@
 import axios from 'axios'
 
-const sampleApiCall = async () => {
+const getHomeGames = async () => {
   try {
     const { data } = await axios.get('http://localhost:7077/home')
-    console.log('sample call succcessful', data)
 
     return data
   } catch (error) {
@@ -11,4 +10,24 @@ const sampleApiCall = async () => {
   }
 }
 
-export { sampleApiCall }
+const getGameDetail = async (id) => {
+  try {
+    const { data } = await axios.get(`http://localhost:7077/game/${id}`)
+
+    return data
+  } catch (error) {
+    console.log('Error occured!', error)
+  }
+}
+
+const searchGames = async () => {
+  try {
+    const { data } = await axios.get('http://localhost:7077/search')
+
+    return data
+  } catch (error) {
+    console.log('Error occured!', error)
+  }
+}
+
+export { getHomeGames, getGameDetail, searchGames }
